@@ -6,7 +6,26 @@ import pandas as pd
 import matplotlib
 matplotlib.use('AGG')
 import matplotlib.pyplot as plt
+%matplotlib inline # 用于将图相钳到notebook中
 
+def describe(a):
+            return pd.Series({
+            'count': len(a),
+            'max': a.max(),
+            'std': a.std(),
+            'mean': a.mean(),
+            '50%': np.percentile(a, 50),
+            '90%': np.percentile(a, 90),
+            })
+#用表格统计latency值在不同段的分布
+def show_dataFrame():
+            summary = pd.DataFrame()
+            for name, data in datas:
+            s = describe(data['Latency'])
+            s.name = name
+            summary = summary.append(s)
+            summary = summary[['count','max','std','mean','50%','90%']]
+            print summary
 
 data=pd.read_csv(r'tcp.csv')
 fug,ax = plt.subplots()
