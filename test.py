@@ -65,6 +65,9 @@ def analysis_group_data():
     internal=pd.read_csv('file.csv', parse_dates=True, usecols=['datetime','name','age'])
     internal=internal[internal['age'].astype(np.int32) < 100] #astype指定数据类型, 并用[[]] 来指定选择数据，可以用&连接多个条件
     internal['datetime']=pd.to_datetime(internal['datetime'],utc=8)
+    #也可以不需要转为数字 
+    print internal['datetime'].dt.microsecond #直接得到想要的部分
+   
     internal['datetime']=internal['datetime'].astype(np.int64) #将时间转为数字
     min=internal['datetime'].min()
     addnoe=pd.Series([cla(x) for x in internal.datetime])
@@ -107,6 +110,16 @@ def drawpicture():
     #plt.ylim(0, 5000)
     ax.legend(loc='best', markerscale=5)
     plt.savefig('latency.png')
+                
+#行列均进行应用
+ def colAndline():
+    def num_missing(x):    
+        return sum(x.isnull())  #Apply到每一列:  
+    print "Missing values per column:"  
+    print data.apply(num_missing, axis=0) #axis=0代表函数应用于每一列  
+    #Apply到每一行:  
+    print "nMissing values per row:" 
+    print data.apply(num_missing, axis=1).head() #axis=1代表函数应用于每一行 
                                 
                                 
 def test():
