@@ -69,8 +69,11 @@ def analysis_group_data():
     print internal['datetime'].dt.microsecond #直接得到想要的部分
    
     internal['datetime']=internal['datetime'].astype(np.int64) #将时间转为数字
+    #可以直接转为数字 ，也可以看时间只包含多少个毫秒之类的internal['MDSnapshortTime_r'].dt.minute/pd.Timedelta('1us')
+    
     min=internal['datetime'].min()
     addnoe=pd.Series([cla(x) for x in internal.datetime])
+    internal=internal.reset_index(drop=True)#有可能用户只是取了internal中的一部分 ，则它的index不一定是从0开始的，这时如果增加一列，会报错
     internal['aadone']=aadone #增加一列
     def cla(n):
         return '%d'%((n-min)/lim) #将某一列按一个规则进行等分
