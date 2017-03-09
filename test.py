@@ -43,6 +43,21 @@ def getSummary():
     plt.minorticks_on()
     ax.legend(loc='upper center', ncol=len(summary.columns), bbox_to_anchor=(0.5, 1.10))
     plt.savefig("summary.png")
+    
+    
+    #双Y轴显示 
+  def drawSummaryTwoY():
+    fig=plt.figure(figsize=FIG_SIZE, dpi=FIG_DPI)
+    ax=fig.add_subplot(111)
+    ax2=ax.twinx()
+    summary2=summary
+    summary.drop(['count','max','min'], axis=1).plot(ax=ax, market='o')
+    summary2.drop(['count','max','std','50%','90%'], axis=1).plot(ax=ax2, market='o',color='black')
+    plt.ylabel("microseconds")
+    plt.minorticks_on()
+    ax.legend(loc='upper center', ncol=len(summary.columns), bbox_to_anchor=(0.5, 1.10))
+    ax2.legend(loc='lower center', ncol=len(summary2.columns), bbox_to_anchor=(0.5, 1.10))
+    plt.savefig("summary.png")
             
             
 #设置datas的值 
