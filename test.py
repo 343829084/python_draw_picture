@@ -58,7 +58,24 @@ def getSummary():
     ax.legend(loc='upper center', ncol=len(summary.columns), bbox_to_anchor=(0.5, 1.10))
     ax2.legend(loc='lower center', ncol=len(summary2.columns), bbox_to_anchor=(0.5, 1.10))
     plt.savefig("summary.png")
-            
+    
+    
+    #多个子图，共用一个X轴
+   def drawCommonX():
+    fig=plt.figure(figsize=FIG_SIZE, dpi=FIG_DPI)
+    ax1=fig.add_subplot(211)
+    ax2=fig.add_subplot(212)
+    plt.subplots_adjust(0,0,1,1,0,0)
+    summary2=summary
+    summary.drop(['count','max','min'], axis=1).plot(ax=ax1, market='o', sharex=True)
+    summary2.drop(['count','max','std','50%','90%'], axis=1).plot(ax=ax2, market='o',color='black')
+    plt.ylabel("microseconds")
+    plt.minorticks_on()
+    ax.legend(loc='upper center', ncol=len(summary.columns), bbox_to_anchor=(0.5, 1.10))
+    #ax2.legend(loc='lower center', ncol=len(summary2.columns), bbox_to_anchor=(0.5, 1.10))
+    plt.savefig("summary.png")
+ 
+
             
 #设置datas的值 
 def setDatas():            
@@ -68,6 +85,16 @@ def setDatas():
         datas.extend([
                     ('abc', tmp[n][['aa','bb']])，
         ])
+        
+  #对行或列进行切片
+ def cutData():
+     #对行切
+    df.iloc[1:3,;]
+    #对列切
+    df.iloc[:, 1:3]
+    #标签切片
+    df.loc['2001':'2004', ['a','b']]
+    
             
            
 #对于需要进行分组处理的图，如需要显示1秒（分成10分），每分内各种属性的点有多少个
@@ -78,6 +105,7 @@ def analysis_group_data():
     
     #usecols指定只加载的列
     internal=pd.read_csv('file.csv', parse_dates=True, usecols=['datetime','name','age'])
+    #保存  pf.to_csv("abc.csv")  pf表示为dataframe
     internal=internal[internal['age'].astype(np.int32) < 100] #astype指定数据类型, 并用[[]] 来指定选择数据，可以用&连接多个条件
     internal['datetime']=pd.to_datetime(internal['datetime'],utc=8)
     #也可以不需要转为数字 
