@@ -7,7 +7,7 @@ import pandas as pd
 import matplotlib
 matplotlib.use('AGG')
 import matplotlib.pyplot as plt
-%matplotlib inline # 用于将图相钳到notebook中
+#%matplotlib inline # 用于将图相钳到notebook中
 from mpl_toolkits.mplot3d import Axes3D
 import itertools
 import os

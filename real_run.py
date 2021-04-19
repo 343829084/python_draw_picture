@@ -8,8 +8,8 @@ import pandas as pd
 import matplotlib
 matplotlib.use('AGG')
 import matplotlib.pyplot as plt
-# 用于将图相钳到notebook中
-%matplotlib inline 
+# 在jpythonbook时，需要添加下面的语句
+#%matplotlib inline
 from mpl_toolkits.mplot3d import Axes3D
 import itertools
 import os
@@ -46,14 +46,16 @@ def describe(a, b):
 #test.csv是由excel文件转化为csv的，文件中的datetime字段为常规类型，为YYmmddHHMMSS格式
 #parse_dates表示让pd将此字段转为日期格式 YY-mm-dd HH:MM:SS
 #usecols表示只需要读取的列名
-internal_latency = pd.read_csv('test.csv', parse_dates=['datetime'], usecols=['datetime','id','num'],encoding='utf-8')
+
+internal_latency = pd.read_excel(r'test.xlsx')
+
 internal_latency=internal_latency[internal_latency['num']>0]
 
 datas=list()
-datetimes = sorted(list(set(internal_latency['datetime'])))
+datetimes = sorted(list(set(internal_latency['time'])))
 tmp = list()
 
-internal_latency.sort_values(by=['datetime'], ascending=True)
+internal_latency.sort_values(by=['time'], ascending=True)
 #print(internal_latency)
 #将一个二维表转为一个二列的表，其中第一列为时间，第二列为一个二维表
 for n in range(len(datetimes)):
@@ -84,3 +86,10 @@ plt.minorticks_on()
 locs, labels = plt.xticks()
 plt.setp(labels, rotation=20)
 plt.savefig("summary.png")
+
+#暂时通过输入参数的形式，对外提供生成多种形式的图
+def main():
+    pass
+
+if __name__ == "__main__":
+    main()
